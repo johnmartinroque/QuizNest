@@ -86,7 +86,7 @@ Do not include extra text or markdown.
   return (
     <div className="flex flex-col items-center justify-center mt-10">
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-2xl p-6 space-y-4">
-        <h1 className="text-2xl font-bold text-center">🎯 AI QUIZMATE</h1>
+        <h1 className="text-2xl font-bold text-center">🎯 QuizNest</h1>
 
         {!quiz.length && (
           <>
