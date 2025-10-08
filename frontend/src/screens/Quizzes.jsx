@@ -40,11 +40,6 @@ function Quizzes() {
     }
   }, [search, quizzes]);
 
-  if (loading) return <p className="text-center mt-10">Loading quizzes...</p>;
-
-  if (!filteredQuizzes.length)
-    return <p className="text-center mt-10">No quizzes found.</p>;
-
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6 text-center">Available Quizzes</h1>
@@ -59,20 +54,26 @@ function Quizzes() {
         />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {filteredQuizzes.map((quiz) => (
-          <div
-            key={quiz.id}
-            className="bg-white shadow-md rounded-xl p-6 cursor-pointer hover:shadow-xl transition"
-            onClick={() => navigate(`/quiz/${quiz.id}`)}
-          >
-            <h2 className="text-xl font-semibold mb-2">{quiz.topic}</h2>
-            <p className="text-gray-500 text-sm">
-              {quiz.questions.length} questions
-            </p>
-          </div>
-        ))}
-      </div>
+      {loading ? (
+        <p className="text-center mt-10">Loading quizzes...</p>
+      ) : filteredQuizzes.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredQuizzes.map((quiz) => (
+            <div
+              key={quiz.id}
+              className="bg-white shadow-md rounded-xl p-6 cursor-pointer hover:shadow-xl transition"
+              onClick={() => navigate(`/quiz/${quiz.id}`)}
+            >
+              <h2 className="text-xl font-semibold mb-2">{quiz.topic}</h2>
+              <p className="text-gray-500 text-sm">
+                {quiz.questions.length} questions
+              </p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-center mt-10">No quizzes found.</p>
+      )}
     </div>
   );
 }
