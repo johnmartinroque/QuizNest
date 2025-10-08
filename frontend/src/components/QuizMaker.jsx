@@ -22,13 +22,17 @@ function QuizMaker() {
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
       const prompt = `
-      Create a 3-question multiple-choice quiz about ${topic}.
-      Format the output strictly as JSON array:
-      [
-        {"question": "Question text", "options": ["A", "B", "C", "D"], "answer": "A"}
-      ]
-      Do not include any markdown formatting or extra text.
-      `;
+Create a 3-question multiple-choice quiz about ${topic}.
+Format strictly as JSON array:
+[
+  {
+    "question": "Question text",
+    "options": ["A. Option1", "B. Option2", "C. Option3", "D. Option4"],
+    "answer": "A"
+  }
+]
+Do not include extra text or markdown.
+`;
 
       const result = await model.generateContent(prompt);
       let text = result.response.text();
@@ -53,8 +57,11 @@ function QuizMaker() {
 
   // Handle user selecting an answer
   const handleSelect = (qIndex, option) => {
-    if (showResults) return; // prevent changes after submission
-    setAnswers({ ...answers, [qIndex]: option });
+    if (showResults) return;
+
+    // option = "A. Something" => store only "A"
+    const letter = option.split(".")[0];
+    setAnswers({ ...answers, [qIndex]: letter });
   };
 
   // Submit quiz and show results
@@ -101,28 +108,29 @@ function QuizMaker() {
                 </p>
                 <ul className="mt-2 space-y-1">
                   {q.options.map((opt, idx) => {
-                    const isSelected = answers[i] === opt;
-                    const isCorrect = showResults && opt === q.answer;
+                    const letter = opt.split(".")[0]; // "A", "B", etc.
+                    const isSelected = answers[i] === letter;
+                    const isCorrect = showResults && letter === q.answer;
                     const isWrong =
-                      showResults && isSelected && opt !== q.answer;
+                      showResults && isSelected && letter !== q.answer;
 
                     return (
                       <li
                         key={idx}
                         onClick={() => handleSelect(i, opt)}
                         className={`ml-4 p-1 rounded cursor-pointer
-    ${
-      showResults
-        ? opt === q.answer
-          ? "bg-green-300"
-          : answers[i] === opt
-          ? "bg-red-300"
-          : "bg-gray-100"
-        : answers[i] === opt
-        ? "bg-blue-200"
-        : "bg-gray-100"
-    }
-  `}
+        ${
+          showResults
+            ? isCorrect
+              ? "bg-green-300"
+              : isWrong
+              ? "bg-red-300"
+              : "bg-gray-100"
+            : isSelected
+            ? "bg-blue-200"
+            : "bg-gray-100"
+        }
+      `}
                       >
                         {opt}
                       </li>
