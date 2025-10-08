@@ -1,14 +1,14 @@
-AI Quiz Maker
+# AI Quiz Maker
 
 🎯 Generate interactive quizzes on any topic using AI!
 
-Overview
+## Overview
 
 AI Quiz Maker is a frontend-first web application that allows users to instantly generate multiple-choice quizzes on any topic. Students or learners can practice independently, receive instant feedback on their answers, and reinforce their understanding of key concepts.
 
 This project aligns with SDG 4: Quality Education, specifically Target 4.4, by enhancing learning outcomes and skills through accessible, interactive tools.
 
-Features
+## Features
 
 Dynamic Quiz Generation: Enter any topic, and the system generates a 3-question multiple-choice quiz automatically using Google Generative AI (Gemini).
 
@@ -26,13 +26,13 @@ Quiz history page
 
 Ability to answer quizzes created by others and search by topic or keyword
 
-Tech Stack
+## Tech Stack
 
 Frontend: React + Vite, HTML, Tailwind CSS, JavaScript
 
 AI/ML: Google Generative AI (Gemini) for quiz generation
 
-Architecture
+## Architecture
 
 Simplified Flow:
 
@@ -51,11 +51,11 @@ Questions are dynamically rendered in the browser.
 Users answer the questions and receive instant feedback on their score.
 
 
-Biggest Challenge: Generating meaningful multiple-choice questions in real-time.
+## Biggest Challenge: Generating meaningful multiple-choice questions in real-time.
 
 Solution: Carefully crafted prompts and JSON templates for Gemini AI, combined with frontend logic to format and display questions dynamically.
 
 
-Summary
+## Summary
 
 AI Quiz Maker provides a fast, fun, and interactive way to practice and test knowledge on any topic. Leveraging AI, it supports self-directed learning, personalized practice, and skill enhancement — empowering students and learners to improve their understanding and retain knowledge effectively.
