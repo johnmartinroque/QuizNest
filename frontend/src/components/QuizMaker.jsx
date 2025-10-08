@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { db } from "../firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
@@ -47,6 +49,12 @@ Do not include extra text or markdown.
 
       const parsedQuiz = JSON.parse(text);
       setQuiz(parsedQuiz);
+
+      await addDoc(collection(db, "quizzes"), {
+        topic,
+        questions: parsedQuiz,
+        createdAt: new Date(),
+      });
     } catch (err) {
       console.error("Error:", err);
       alert("⚠️ Failed to generate quiz. Try again.");

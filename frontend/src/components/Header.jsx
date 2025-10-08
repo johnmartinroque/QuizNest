@@ -25,14 +25,14 @@ function Header() {
         {/* Desktop Nav */}
         <nav aria-label="Global" className="hidden md:block">
           <ul className="flex items-center gap-6 text-sm">
-            {["Home", "Profile", "About"].map((item) => (
+            {["Home", "Profile", "Quizzes"].map((item) => (
               <li key={item}>
-                <a
-                  className="text-gray-500 transition hover:text-gray-700 dark:text-white dark:hover:text-gray-300"
-                  href="#"
+                <Link
+                  to={`/${item}`}
+                  className="block text-gray-600 hover:text-teal-600 dark:text-white dark:hover:text-teal-400 transition"
                 >
                   {item}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -101,14 +101,14 @@ function Header() {
       {menuOpen && (
         <nav className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
           <ul className="flex flex-col items-center px-4 py-4 space-y-3 text-sm">
-            {["Home", "Profile", "About"].map((item) => (
+            {["Home", "Profile", "Quizzes"].map((item) => (
               <li key={item}>
-                <a
-                  href="#"
+                <Link
+                  to={`/${item}`}
                   className="block text-gray-600 hover:text-teal-600 dark:text-white dark:hover:text-teal-400 transition"
                 >
                   {item}
-                </a>
+                </Link>
               </li>
             ))}
             <hr className="w-full border-gray-200 dark:border-gray-700 my-2" />
