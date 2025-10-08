@@ -31,6 +31,8 @@ Ability to answer quizzes created by others and search by topic or keyword
 
 Frontend: React + Vite, HTML, Tailwind CSS, JavaScript
 
+Database: Firebase
+
 AI/ML: Google Generative AI (Gemini) for quiz generation
 
 ## Architecture
