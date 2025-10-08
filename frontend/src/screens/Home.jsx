@@ -6,8 +6,6 @@ import QuizMaker from "../components/QuizMaker";
 function Home() {
   return (
     <div>
-      Home
-      <BackendStatus />
       <QuizMaker />
     </div>
   );
