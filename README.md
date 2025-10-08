@@ -61,4 +61,4 @@ Solution: Carefully crafted prompts and JSON templates for Gemini AI, combined w
 
 ## Summary
 
-AI Quiz Maker provides a fast, fun, and interactive way to practice and test knowledge on any topic. Leveraging AI, it supports self-directed learning, personalized practice, and skill enhancement — empowering students and learners to improve their understanding and retain knowledge effectively.
+QuizNest provides a fast, fun, and interactive way to practice and test knowledge on any topic. Leveraging AI, it supports self-directed learning, personalized practice, and skill enhancement — empowering students and learners to improve their understanding and retain knowledge effectively.
