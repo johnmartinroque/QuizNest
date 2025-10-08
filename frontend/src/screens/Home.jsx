@@ -8,7 +8,6 @@ function Home() {
     <div>
       Home
       <BackendStatus />
-      <GeminiChat />
       <QuizMaker />
     </div>
   );

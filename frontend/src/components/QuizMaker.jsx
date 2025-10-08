@@ -22,7 +22,7 @@ function QuizMaker() {
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
       const prompt = `
-      Create a 5-question multiple-choice quiz about ${topic}.
+      Create a 3-question multiple-choice quiz about ${topic}.
       Format the output strictly as JSON array:
       [
         {"question": "Question text", "options": ["A", "B", "C", "D"], "answer": "A"}
@@ -111,10 +111,18 @@ function QuizMaker() {
                         key={idx}
                         onClick={() => handleSelect(i, opt)}
                         className={`ml-4 p-1 rounded cursor-pointer
-                          ${isSelected ? "bg-blue-200" : "bg-gray-100"}
-                          ${isCorrect ? "bg-green-300" : ""}
-                          ${isWrong ? "bg-red-300" : ""}
-                        `}
+    ${
+      showResults
+        ? opt === q.answer
+          ? "bg-green-300"
+          : answers[i] === opt
+          ? "bg-red-300"
+          : "bg-gray-100"
+        : answers[i] === opt
+        ? "bg-blue-200"
+        : "bg-gray-100"
+    }
+  `}
                       >
                         {opt}
                       </li>
