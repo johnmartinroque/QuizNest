@@ -143,9 +143,22 @@ function QuizMaker() {
             )}
 
             {showResults && (
-              <p className="text-center mt-4 text-xl font-bold">
-                Your Score: {score} / {quiz.length}
-              </p>
+              <div className="flex flex-col items-center space-y-2 mt-4">
+                <p className="text-center text-xl font-bold">
+                  Your Score: {score} / {quiz.length}
+                </p>
+                <button
+                  onClick={() => {
+                    setQuiz([]);
+                    setAnswers({});
+                    setShowResults(false);
+                    setTopic(""); // optional: clear topic
+                  }}
+                  className="w-full bg-yellow-500 text-white py-2 rounded-lg hover:bg-yellow-600"
+                >
+                  Prompt Quiz Again
+                </button>
+              </div>
             )}
           </>
         )}
