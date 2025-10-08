@@ -1,4 +1,4 @@
-# AI Quiz Maker [Website Link](https://emerg-tech.vercel.app)
+# QuizNest [Website Link](https://emerg-tech.vercel.app)
 
 
 🎯 Generate interactive quizzes on any topic using AI!
