@@ -76,9 +76,9 @@ Do not include extra text or markdown.
   }, 0);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6 space-y-4">
-        <h1 className="text-2xl font-bold text-center">🎯 AI Quiz Maker</h1>
+    <div className="flex flex-col items-center justify-center mt-10">
+      <div className="bg-white rounded-2xl shadow-lg w-full max-w-2xl p-6 space-y-4">
+        <h1 className="text-2xl font-bold text-center">🎯 AI QUIZMATE</h1>
 
         {!quiz.length && (
           <>
