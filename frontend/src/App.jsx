@@ -9,6 +9,8 @@ import Home from "./screens/Home";
 import Header from "./components/Header";
 import Quizzes from "./screens/Quizzes";
 import AnswerQuiz from "./screens/AnswerQuiz";
+import Register from "./screens/Register";
+import Login from "./screens/Login";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route path="/Home" element={<Home />} />
           <Route path="/Quizzes" element={<Quizzes />} />
           <Route path="/quiz/:id" element={<AnswerQuiz />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
     </div>

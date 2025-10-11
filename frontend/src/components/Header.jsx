@@ -41,19 +41,19 @@ function Header() {
         {/* Right Side Buttons */}
         <div className="flex items-center gap-4">
           <div className="hidden sm:flex sm:gap-4">
-            <a
+            <Link
               className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 dark:hover:bg-teal-500"
-              href="#"
+              to="/login"
             >
               Login
-            </a>
+            </Link>
 
-            <a
+            <Link
               className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-700 sm:block dark:bg-gray-800 dark:text-white dark:hover:text-gray-300"
-              href="#"
+              to="/register"
             >
               Register
-            </a>
+            </Link>
           </div>
 
           {/* Hamburger Button */}
