@@ -8,7 +8,8 @@ function Register() {
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const registerHandler = async () => {
+  const registerHandler = async (e) => {
+    e.preventDefault();
     try {
       const userInfo = await createUserWithEmailAndPassword(
         auth,
