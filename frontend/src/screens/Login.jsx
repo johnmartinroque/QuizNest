@@ -17,7 +17,17 @@ function Login() {
       console.log("success");
     } catch (err) {
       console.error(err);
-      setError(err.code);
+      if (err.code === "auth/invalid-email") {
+        setError("The email address is not valid.");
+      } else if (err.code === "auth/user-not-found") {
+        setError("No user found with this email.");
+      } else if (err.code === "auth/wrong-password") {
+        setError("Incorrect password.");
+      } else if (err.code === "auth/too-many-requests") {
+        setError("Too many failed login attempts. Please try again later.");
+      } else {
+        setError("Login failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
