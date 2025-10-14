@@ -2,6 +2,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../firebase";
 import { Link } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -25,6 +26,8 @@ function Login() {
         setError("Incorrect password.");
       } else if (err.code === "auth/too-many-requests") {
         setError("Too many failed login attempts. Please try again later.");
+      } else if (err.code === "auth/invalid-credential") {
+        setError("Wrong email or password");
       } else {
         setError("Login failed. Please try again.");
       }
@@ -32,10 +35,6 @@ function Login() {
       setLoading(false);
     }
   };
-
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
 
   return (
     <div>
@@ -92,6 +91,7 @@ function Login() {
                 >
                   Login
                 </button>
+                {loading && <Spinner />}
 
                 {error && (
                   <div

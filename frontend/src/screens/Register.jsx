@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../firebase";
 import { Link } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -110,6 +111,7 @@ function Register() {
                 >
                   Create an account
                 </button>
+                {loading && <Spinner />}
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Already have an account?{" "}
                   <Link
