@@ -22,7 +22,17 @@ function Register() {
       console.log(userInfo.user);
     } catch (err) {
       console.error(err);
-      setError(err.code);
+      if (err.code === "auth/email-already-in-use") {
+        setError("This email is already registered.");
+      } else if (err.code === "auth/invalid-email") {
+        setError("The email address is not valid.");
+      } else if (err.code === "auth/weak-password") {
+        setError("Password should be at least 6 characters.");
+      } else if (err.code === "auth/operation-not-allowed") {
+        setError("Email/password accounts are not enabled.");
+      } else {
+        setError("Registration failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
