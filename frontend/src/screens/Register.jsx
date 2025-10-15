@@ -1,8 +1,9 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { auth } from "../firebase";
-import { Link } from "react-router-dom";
+import { auth, db } from "../firebase";
+import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import { doc, setDoc } from "firebase/firestore";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ function Register() {
   const [password2, setPassword2] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const registerHandler = async (e) => {
     setLoading(true);
@@ -20,6 +22,15 @@ function Register() {
         email,
         password
       );
+
+      const user = userInfo.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        userId: user.uid,
+        email: user.email,
+        createdAt: new Date(),
+      });
+      navigate("/");
       console.log(userInfo.user);
     } catch (err) {
       console.error(err);
