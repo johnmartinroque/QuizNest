@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,12 +11,28 @@ import Quizzes from "./screens/Quizzes";
 import AnswerQuiz from "./screens/AnswerQuiz";
 import Register from "./screens/Register";
 import Login from "./screens/Login";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import UserHeader from "./components/UserHeader";
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) return null; // or show a loading spinner
+
   return (
     <div>
       <Router>
-        <Header />
+        {user ? <UserHeader /> : <Header />}
         <Routes>
           <Route path="/" element={<Navigate to="/Home" replace />} />
           <Route path="/Home" element={<Home />} />
