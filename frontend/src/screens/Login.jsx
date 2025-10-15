@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../firebase";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 
 function Login() {
@@ -9,6 +9,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const loginHandler = async (e) => {
     setLoading(true);
@@ -31,6 +32,7 @@ function Login() {
       } else {
         setError("Login failed. Please try again.");
       }
+      navigate("/");
     } finally {
       setLoading(false);
     }
