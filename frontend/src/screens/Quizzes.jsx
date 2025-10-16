@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
+import Spinner from "../components/Spinner";
 
 function Quizzes() {
   const [quizzes, setQuizzes] = useState([]);
   const [filteredQuizzes, setFilteredQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,7 +57,9 @@ function Quizzes() {
       </div>
 
       {loading ? (
-        <p className="text-center mt-10">Loading quizzes...</p>
+        <p className="text-center mt-10">
+          <Spinner />
+        </p>
       ) : filteredQuizzes.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredQuizzes.map((quiz) => (
