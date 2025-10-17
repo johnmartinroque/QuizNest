@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Profiler, useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,6 +14,7 @@ import Login from "./screens/Login";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import UserHeader from "./components/UserHeader";
+import Profile from "./screens/Profile";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -37,6 +38,7 @@ function App() {
           <Route path="/" element={<Navigate to="/Home" replace />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/Quizzes" element={<Quizzes />} />
+          <Route path="/Profile" element={<Profile />} />
           <Route path="/quiz/:id" element={<AnswerQuiz />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
