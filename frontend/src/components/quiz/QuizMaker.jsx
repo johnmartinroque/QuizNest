@@ -13,21 +13,30 @@ function QuizMaker() {
   const navigate = useNavigate();
 
   const generateQuiz = async () => {
-    if (!topic.trim()) return;
+    if (!topic.trim()) {
+      alert("Please enter a topic.");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
       const prompt = `
-Create a 3-question multiple-choice quiz about ${topic}.
-Return only a JSON array:
-[
-  {
-    "question": "Question text",
-    "options": ["A. Option1", "B. Option2", "C. Option3", "D. Option4"],
-    "answer": "A"
-  }
-]
+Create a 3-question multiple-choice quiz about "${topic}".
+Also generate 3 to 5 short descriptive tags related to the topic (e.g., for "JavaScript": ["programming", "technology", "web development"]).
+Return only a JSON object in this exact format:
+{
+  "tags": ["tag1", "tag2", "tag3"],
+  "questions": [
+    {
+      "question": "Question text",
+      "options": ["A. Option1", "B. Option2", "C. Option3", "D. Option4"],
+      "answer": "A"
+    }
+  ]
+}
 `;
 
       const result = await model.generateContent(prompt);
@@ -39,15 +48,16 @@ Return only a JSON array:
 
       const docRef = await addDoc(collection(db, "quizzes"), {
         topic,
-        questions: parsed,
+        tags: parsed.tags || [],
+        questions: parsed.questions || [],
         createdAt: new Date(),
       });
 
-      // redirect to AnswerQuiz
+      // redirect to the quiz page
       navigate(`/quiz/${docRef.id}`);
     } catch (err) {
-      console.error("Error:", err);
-      alert("⚠️ Failed to generate quiz. Try again.");
+      console.error("Error generating quiz:", err);
+      alert("⚠️ Failed to generate quiz. Please try again.");
     }
 
     setLoading(false);
@@ -56,7 +66,7 @@ Return only a JSON array:
   return (
     <div className="flex flex-col items-center justify-center mt-10">
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-2xl p-6">
-        <h1 className="text-2xl font-bold text-center">QuizNest</h1>
+        <h1 className="text-2xl font-bold text-center mb-4">QuizNest</h1>
         <QuizInput
           topic={topic}
           setTopic={setTopic}
