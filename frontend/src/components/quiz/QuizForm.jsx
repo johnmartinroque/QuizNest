@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import QuizQuestion from "./QuizQuestion";
 import QuizResults from "./QuizResults";
 
-function QuizForm({ quiz, topic }) {
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { auth, db } from "../../firebase";
+
+function QuizForm({ quiz, topic, quizId }) {
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
 
@@ -12,17 +15,44 @@ function QuizForm({ quiz, topic }) {
     setAnswers({ ...answers, [qIndex]: letter });
   };
 
-  const submitQuiz = () => setShowResults(true);
+  const submitQuiz = async () => {
+    setShowResults(true);
 
-  const score = quiz.reduce(
-    (acc, q, i) => (answers[i] === q.answer ? acc + 1 : acc),
-    0
-  );
+    // ✅ Save result to Firestore if user is logged in
+    const user = auth.currentUser;
+    if (user) {
+      const score = quiz.reduce(
+        (acc, q, i) => (answers[i] === q.answer ? acc + 1 : acc),
+        0
+      );
+
+      const userRef = doc(db, "users", user.uid);
+      try {
+        await updateDoc(userRef, {
+          history: arrayUnion({
+            quizId,
+            topic,
+            score,
+            total: quiz.length,
+            takenAt: new Date(),
+          }),
+        });
+        console.log("✅ Quiz history saved!");
+      } catch (err) {
+        console.error("Error saving history:", err);
+      }
+    }
+  };
 
   const resetQuiz = () => {
     setAnswers({});
     setShowResults(false);
   };
+
+  const score = quiz.reduce(
+    (acc, q, i) => (answers[i] === q.answer ? acc + 1 : acc),
+    0
+  );
 
   return (
     <div className="bg-white rounded-2xl shadow-lg w-full max-w-2xl p-6 space-y-4">
