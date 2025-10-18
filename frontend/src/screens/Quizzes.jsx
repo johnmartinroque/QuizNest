@@ -31,13 +31,21 @@ function Quizzes() {
     fetchQuizzes();
   }, []);
 
+  // 🔍 Filter by topic OR tags
   useEffect(() => {
-    if (!search) {
+    if (!search.trim()) {
       setFilteredQuizzes(quizzes);
     } else {
-      const filtered = quizzes.filter((quiz) =>
-        quiz.topic.toLowerCase().includes(search.toLowerCase())
-      );
+      const lowerSearch = search.toLowerCase();
+
+      const filtered = quizzes.filter((quiz) => {
+        const topicMatch = quiz.topic?.toLowerCase().includes(lowerSearch);
+        const tagMatch = quiz.tags?.some((tag) =>
+          tag.toLowerCase().includes(lowerSearch)
+        );
+        return topicMatch || tagMatch;
+      });
+
       setFilteredQuizzes(filtered);
     }
   }, [search, quizzes]);
@@ -49,7 +57,7 @@ function Quizzes() {
       <div className="mb-6 text-center">
         <input
           type="text"
-          placeholder="Search quizzes..."
+          placeholder="Search quizzes by topic or tag..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="border border-gray-300 rounded-lg px-4 py-2 w-full sm:w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -69,8 +77,20 @@ function Quizzes() {
               onClick={() => navigate(`/quiz/${quiz.id}`)}
             >
               <h2 className="text-xl font-semibold mb-2">{quiz.topic}</h2>
+              {quiz.tags && quiz.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1 mb-2">
+                  {quiz.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
               <p className="text-gray-500 text-sm">
-                {quiz.questions.length} questions
+                {quiz.questions?.length || 0} questions
               </p>
             </div>
           ))}
