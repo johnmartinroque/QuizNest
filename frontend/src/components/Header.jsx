@@ -25,7 +25,7 @@ function Header() {
         {/* Desktop Nav */}
         <nav aria-label="Global" className="hidden md:block">
           <ul className="flex items-center gap-6 text-sm">
-            {["Home", "Profile", "Quizzes"].map((item) => (
+            {["Home", "Quizzes"].map((item) => (
               <li key={item}>
                 <Link
                   to={`/${item}`}
@@ -39,8 +39,10 @@ function Header() {
         </nav>
 
         {/* Right Side Buttons */}
+        {/* Right Side Buttons */}
         <div className="flex items-center gap-4">
-          <div className="hidden sm:flex sm:gap-4">
+          {/* Hide this on small screens (same breakpoint as hamburger) */}
+          <div className="hidden md:flex md:gap-4">
             <Link
               className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 dark:hover:bg-teal-500"
               to="/login"
@@ -49,7 +51,7 @@ function Header() {
             </Link>
 
             <Link
-              className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-700 sm:block dark:bg-gray-800 dark:text-white dark:hover:text-gray-300"
+              className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-700 dark:bg-gray-800 dark:text-white dark:hover:text-gray-300"
               to="/register"
             >
               Register
@@ -101,7 +103,7 @@ function Header() {
       {menuOpen && (
         <nav className="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
           <ul className="flex flex-col items-center px-4 py-4 space-y-3 text-sm">
-            {["Home", "Profile", "Quizzes"].map((item) => (
+            {["Home", "Quizzes"].map((item) => (
               <li key={item}>
                 <Link
                   to={`/${item}`}

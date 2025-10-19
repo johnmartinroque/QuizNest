@@ -51,6 +51,7 @@ function App() {
           <Route path="/quiz/:id" element={<AnswerQuiz />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="*" element={<Navigate to="/Home" replace />} />
         </Routes>
       </Router>
     </div>
