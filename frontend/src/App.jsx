@@ -15,6 +15,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 import UserHeader from "./components/UserHeader";
 import Profile from "./screens/Profile";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -38,7 +39,15 @@ function App() {
           <Route path="/" element={<Navigate to="/Home" replace />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/Quizzes" element={<Quizzes />} />
-          <Route path="/Profile" element={<Profile />} />
+          <Route
+            path="/Profile"
+            element={
+              <ProtectedRoute user={user}>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="/quiz/:id" element={<AnswerQuiz />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
