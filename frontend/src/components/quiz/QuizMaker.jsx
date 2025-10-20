@@ -9,6 +9,7 @@ const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 function QuizMaker() {
   const [topic, setTopic] = useState("");
+  const [difficulty, setDifficulty] = useState("medium");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -24,7 +25,7 @@ function QuizMaker() {
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
       const prompt = `
-Create a 3-question multiple-choice quiz about "${topic}".
+Create a 3-question multiple-choice quiz about "${topic}" with "${difficulty}" difficulty.
 Also generate 3 to 5 short descriptive tags related to the topic (e.g., for "JavaScript": ["programming", "technology", "web development"]).
 Return only a JSON object in this exact format:
 {
@@ -48,12 +49,12 @@ Return only a JSON object in this exact format:
 
       const docRef = await addDoc(collection(db, "quizzes"), {
         topic,
+        difficulty,
         tags: parsed.tags || [],
         questions: parsed.questions || [],
         createdAt: new Date(),
       });
 
-      // redirect to the quiz page
       navigate(`/quiz/${docRef.id}`);
     } catch (err) {
       console.error("Error generating quiz:", err);
@@ -70,6 +71,8 @@ Return only a JSON object in this exact format:
         <QuizInput
           topic={topic}
           setTopic={setTopic}
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
           loading={loading}
           generateQuiz={generateQuiz}
         />

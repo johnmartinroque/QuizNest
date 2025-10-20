@@ -1,8 +1,15 @@
 import React from "react";
 
-function QuizInput({ topic, setTopic, loading, generateQuiz }) {
+function QuizInput({
+  topic,
+  setTopic,
+  difficulty,
+  setDifficulty,
+  loading,
+  generateQuiz,
+}) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <input
         type="text"
         value={topic}
@@ -10,6 +17,17 @@ function QuizInput({ topic, setTopic, loading, generateQuiz }) {
         placeholder="Enter a topic (e.g. JavaScript, Space, History)"
         className="w-full border p-2 rounded-lg"
       />
+
+      <select
+        value={difficulty}
+        onChange={(e) => setDifficulty(e.target.value)}
+        className="w-full border p-2 rounded-lg"
+      >
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+
       <button
         onClick={generateQuiz}
         disabled={loading}
