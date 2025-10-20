@@ -9,6 +9,7 @@ function Quizzes() {
   const [filteredQuizzes, setFilteredQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [difficultyFilter, setDifficultyFilter] = useState("all");
 
   const navigate = useNavigate();
 
@@ -31,30 +32,38 @@ function Quizzes() {
     fetchQuizzes();
   }, []);
 
-  // 🔍 Filter by topic OR tags
+  // 🔍 Filter by topic/tags + difficulty
   useEffect(() => {
-    if (!search.trim()) {
-      setFilteredQuizzes(quizzes);
-    } else {
-      const lowerSearch = search.toLowerCase();
+    let filtered = quizzes;
 
-      const filtered = quizzes.filter((quiz) => {
+    // Filter by search
+    if (search.trim()) {
+      const lowerSearch = search.toLowerCase();
+      filtered = filtered.filter((quiz) => {
         const topicMatch = quiz.topic?.toLowerCase().includes(lowerSearch);
         const tagMatch = quiz.tags?.some((tag) =>
           tag.toLowerCase().includes(lowerSearch)
         );
         return topicMatch || tagMatch;
       });
-
-      setFilteredQuizzes(filtered);
     }
-  }, [search, quizzes]);
+
+    // Filter by difficulty
+    if (difficultyFilter !== "all") {
+      filtered = filtered.filter(
+        (quiz) => quiz.difficulty?.toLowerCase() === difficultyFilter
+      );
+    }
+
+    setFilteredQuizzes(filtered);
+  }, [search, difficultyFilter, quizzes]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6 text-center">Available Quizzes</h1>
 
-      <div className="mb-6 text-center">
+      {/* Search and Filter */}
+      <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
         <input
           type="text"
           placeholder="Search quizzes by topic or tag..."
@@ -62,6 +71,17 @@ function Quizzes() {
           onChange={(e) => setSearch(e.target.value)}
           className="border border-gray-300 rounded-lg px-4 py-2 w-full sm:w-1/2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
+
+        <select
+          value={difficultyFilter}
+          onChange={(e) => setDifficultyFilter(e.target.value)}
+          className="border border-gray-300 rounded-lg px-4 py-2 w-full sm:w-1/4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="all">All Difficulties</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select>
       </div>
 
       {loading ? (
@@ -77,6 +97,23 @@ function Quizzes() {
               onClick={() => navigate(`/quiz/${quiz.id}`)}
             >
               <h2 className="text-xl font-semibold mb-2">{quiz.topic}</h2>
+
+              {/* Difficulty badge */}
+              {quiz.difficulty && (
+                <span
+                  className={`inline-block mb-2 px-2 py-1 text-xs font-medium rounded-full ${
+                    quiz.difficulty === "easy"
+                      ? "bg-green-100 text-green-700"
+                      : quiz.difficulty === "medium"
+                      ? "bg-yellow-100 text-yellow-700"
+                      : "bg-red-100 text-red-700"
+                  }`}
+                >
+                  {quiz.difficulty.charAt(0).toUpperCase() +
+                    quiz.difficulty.slice(1)}
+                </span>
+              )}
+
               {quiz.tags && quiz.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1 mb-2">
                   {quiz.tags.map((tag, idx) => (
@@ -89,6 +126,7 @@ function Quizzes() {
                   ))}
                 </div>
               )}
+
               <p className="text-gray-500 text-sm">
                 {quiz.questions?.length || 0} questions
               </p>
