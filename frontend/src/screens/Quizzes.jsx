@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
 import { db } from "../firebase";
 import Spinner from "../components/Spinner";
+import QuizCard from "../components/QuizCard";
 
 function Quizzes() {
   const [quizzes, setQuizzes] = useState([]);
@@ -10,8 +10,6 @@ function Quizzes() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -36,7 +34,6 @@ function Quizzes() {
   useEffect(() => {
     let filtered = quizzes;
 
-    // Filter by search
     if (search.trim()) {
       const lowerSearch = search.toLowerCase();
       filtered = filtered.filter((quiz) => {
@@ -48,7 +45,6 @@ function Quizzes() {
       });
     }
 
-    // Filter by difficulty
     if (difficultyFilter !== "all") {
       filtered = filtered.filter(
         (quiz) => quiz.difficulty?.toLowerCase() === difficultyFilter
@@ -91,46 +87,7 @@ function Quizzes() {
       ) : filteredQuizzes.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredQuizzes.map((quiz) => (
-            <div
-              key={quiz.id}
-              className="bg-white shadow-md rounded-xl p-6 cursor-pointer hover:shadow-xl transition"
-              onClick={() => navigate(`/quiz/${quiz.id}`)}
-            >
-              <h2 className="text-xl font-semibold mb-2">{quiz.topic}</h2>
-
-              {/* Difficulty badge */}
-              {quiz.difficulty && (
-                <span
-                  className={`inline-block mb-2 px-2 py-1 text-xs font-medium rounded-full ${
-                    quiz.difficulty === "easy"
-                      ? "bg-green-100 text-green-700"
-                      : quiz.difficulty === "medium"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-red-100 text-red-700"
-                  }`}
-                >
-                  {quiz.difficulty.charAt(0).toUpperCase() +
-                    quiz.difficulty.slice(1)}
-                </span>
-              )}
-
-              {quiz.tags && quiz.tags.length > 0 && (
-                <div className="flex flex-wrap gap-1 mb-2">
-                  {quiz.tags.map((tag, idx) => (
-                    <span
-                      key={idx}
-                      className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              <p className="text-gray-500 text-sm">
-                {quiz.questions?.length || 0} questions
-              </p>
-            </div>
+            <QuizCard key={quiz.id} quiz={quiz} />
           ))}
         </div>
       ) : (
