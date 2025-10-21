@@ -1,0 +1,32 @@
+/* Default calendar style overrides */
+.react-calendar {
+  border: none !important;
+  width: 100% !important;
+  background: transparent !important;
+}
+
+/* Streak day (green) */
+.streak-day {
+  background-color: #22c55e !important; /* Tailwind green-500 */
+  color: white !important;
+  border-radius: 6px;
+}
+
+/* Today (gray) */
+.today-day {
+  background-color: #9ca3af !important; /* Tailwind gray-400 */
+  color: white !important;
+  border-radius: 6px;
+}
+
+/* Normal days (light gray) */
+.normal-day {
+  background-color: #e5e7eb !important; /* Tailwind gray-200 */
+  color: #4b5563 !important;
+  border-radius: 6px;
+}
+
+/* Improve hover effect */
+.react-calendar__tile:hover {
+  background-color: #d1fae5 !important; /* light green hover */
+}
