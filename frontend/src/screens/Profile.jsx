@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import HistoryCard from "../components/HistoryCard"; // adjust path if needed
+import StreakCounter from "../components/StreakCounter";
 
 function Profile() {
   const [history, setHistory] = useState([]);
@@ -50,6 +51,10 @@ function Profile() {
     <div>
       <h1 className="text-2xl font-bold mb-4 text-center">👤 Profile</h1>
       <p className="text-center text-gray-600 mb-6">{userEmail}</p>
+
+      <div className="mb-6">
+        <StreakCounter />
+      </div>
       <div className="max-w-2xl mx-auto mt-10 bg-white p-6 rounded-xl shadow-md">
         <h2 className="text-xl font-semibold mb-3">🧠 Quiz History</h2>
 
