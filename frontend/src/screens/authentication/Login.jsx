@@ -1,8 +1,9 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { auth } from "../../firebase";
+
 import { Link, useNavigate } from "react-router-dom";
-import Spinner from "../components/Spinner";
+import Spinner from "../../components/others/Spinner";
+import { auth } from "../../firebase";
 
 function Login() {
   const [email, setEmail] = useState("");

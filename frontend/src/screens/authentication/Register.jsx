@@ -1,9 +1,10 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { auth, db } from "../../firebase";
+
 import { Link, useNavigate } from "react-router-dom";
-import Spinner from "../components/Spinner";
 import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../../firebase";
+import Spinner from "../../components/others/Spinner";
 
 function Register() {
   const [email, setEmail] = useState("");

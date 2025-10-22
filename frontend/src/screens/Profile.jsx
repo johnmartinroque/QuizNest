@@ -4,7 +4,9 @@ import { doc, getDoc } from "firebase/firestore";
 import HistoryCard from "../components/profile/HistoryCard"; // adjust path if needed
 import StreakCounter from "../components/profile/StreakCounter";
 import StreakCalendar from "../components/profile/StreakCalendar";
+
 import Spinner from "../components/others/Spinner";
+import UserStatistics from "../components/profile/UserStatistics";
 function Profile() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,6 +60,7 @@ function Profile() {
       <div className="mb-6">
         <StreakCounter />
         <StreakCalendar history={history} />
+        <UserStatistics history={history} />
       </div>
       <div className="max-w-2xl mx-auto mt-10 bg-white p-6 rounded-xl shadow-md">
         <h2 className="text-xl font-semibold mb-3">🧠 Quiz History</h2>

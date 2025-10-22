@@ -6,16 +6,16 @@ import {
   Navigate,
 } from "react-router-dom";
 import Home from "./screens/Home";
-import Header from "./components/Header";
+import Header from "./components/others/UserHeader";
 import Quizzes from "./screens/Quizzes";
 import AnswerQuiz from "./screens/AnswerQuiz";
-import Register from "./screens/Register";
-import Login from "./screens/Login";
+import Register from "./screens/authentication/Register";
+import Login from "./screens/authentication/Login";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-import UserHeader from "./components/UserHeader";
+import UserHeader from "./components/others/UserHeader";
 import Profile from "./screens/Profile";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/others/ProtectedRoute";
 
 function App() {
   const [user, setUser] = useState(null);
