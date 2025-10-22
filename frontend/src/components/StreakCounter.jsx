@@ -27,42 +27,53 @@ function StreakCounter() {
             return;
           }
 
-          // Extract unique quiz days (in YYYY-MM-DD format)
+          // Convert timestamps → local YYYY-MM-DD
+          const formatLocalDate = (date) => {
+            const local = new Date(
+              date.getTime() - date.getTimezoneOffset() * 60000
+            );
+            return local.toISOString().split("T")[0];
+          };
+
           const days = history
             .map((h) => {
               if (h.takenAt?.seconds) {
                 const date = new Date(h.takenAt.seconds * 1000);
-                return date.toISOString().split("T")[0]; // format YYYY-MM-DD
+                return formatLocalDate(date);
               }
               return null;
             })
             .filter(Boolean)
-            .sort((a, b) => new Date(b) - new Date(a)); // sort newest → oldest
+            .sort((a, b) => new Date(b) - new Date(a)); // newest → oldest
 
-          // Remove duplicate days
           const uniqueDays = [...new Set(days)];
 
           let currentStreak = 1;
           for (let i = 0; i < uniqueDays.length - 1; i++) {
             const currentDate = new Date(uniqueDays[i]);
             const prevDate = new Date(uniqueDays[i + 1]);
-
             const diffDays = (currentDate - prevDate) / (1000 * 60 * 60 * 24);
 
             if (diffDays === 1) {
               currentStreak++;
             } else if (diffDays > 1) {
-              // gap found → streak breaks
-              break;
+              break; // streak breaks
             }
           }
 
-          // If today is not included, reset streak to 0
-          const today = new Date().toISOString().split("T")[0];
-          if (uniqueDays[0] !== today) {
-            setStreak(0);
-          } else {
+          // ✅ Keep streak if last quiz was today OR yesterday
+          const today = new Date();
+          const latestQuizDate = new Date(uniqueDays[0]);
+
+          const diffFromToday =
+            (today.setHours(0, 0, 0, 0) - latestQuizDate.setHours(0, 0, 0, 0)) /
+            (1000 * 60 * 60 * 24);
+
+          if (diffFromToday <= 1) {
+            // today (0) or yesterday (1)
             setStreak(currentStreak);
+          } else {
+            setStreak(0); // missed a day
           }
         } else {
           setStreak(0);

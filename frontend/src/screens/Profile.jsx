@@ -4,7 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 import HistoryCard from "../components/HistoryCard"; // adjust path if needed
 import StreakCounter from "../components/StreakCounter";
 import StreakCalendar from "../components/StreakCalendar";
-
+import Spinner from "../components/Spinner";
 function Profile() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -44,7 +44,9 @@ function Profile() {
   if (loading)
     return (
       <div className="flex justify-center items-center h-screen">
-        <p className="text-gray-600">Loading profile...</p>
+        <p className="text-gray-600">
+          <Spinner />
+        </p>
       </div>
     );
 
