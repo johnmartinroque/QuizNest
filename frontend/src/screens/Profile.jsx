@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
-import HistoryCard from "../components/HistoryCard"; // adjust path if needed
-import StreakCounter from "../components/StreakCounter";
-import StreakCalendar from "../components/StreakCalendar";
-import Spinner from "../components/Spinner";
+import HistoryCard from "../components/profile/HistoryCard"; // adjust path if needed
+import StreakCounter from "../components/profile/StreakCounter";
+import StreakCalendar from "../components/profile/StreakCalendar";
+import Spinner from "../components/others/Spinner";
 function Profile() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);

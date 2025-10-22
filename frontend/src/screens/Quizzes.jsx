@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import Spinner from "../components/Spinner";
-import QuizCard from "../components/QuizCard";
+import Spinner from "../components/others/Spinner";
+import QuizCard from "../components/quiz/QuizCard";
 
 function Quizzes() {
   const [quizzes, setQuizzes] = useState([]);

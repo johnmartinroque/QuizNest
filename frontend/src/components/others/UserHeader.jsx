@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase"; // adjust path if needed
+import { auth } from "../../firebase"; // adjust path if needed
 
 function UserHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
