@@ -20,11 +20,11 @@ This project aligns with SDG 4: Quality Education, specifically Target 4.4, by e
 
 ## Tech Stack
 
-Frontend: React + Vite, HTML, Tailwind CSS, JavaScript
-
-Database: Firebase
-
-AI/ML: Google Generative AI (Gemini) for quiz generation
+- **Frontend:** React, React Router
+- **Database:** Firebase
+- **State Management:** In-memory per lobby
+- **AI:** Google Generative AI (Gemini) for quiz generation
+  
 
 ## Architecture
 
