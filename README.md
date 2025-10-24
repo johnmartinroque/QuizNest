@@ -69,31 +69,3 @@ npm start
 ```
 
 
-
-## Architecture
-
-Simplified Flow:
-
-User Input (Topic) → React Frontend → Google Gemini AI → Generated Quiz → Frontend Rendering → Student Practice & Score Feedback
-
-Steps:
-
-Users enter a topic or upload study material.
-
-The frontend sends a request to the Gemini AI model to generate a 3-question multiple-choice quiz.
-
-The AI returns structured JSON containing questions, options, and correct answers.
-
-Questions are dynamically rendered in the browser.
-
-Users answer the questions and receive instant feedback on their score.
-
-
-## Biggest Challenge: Generating meaningful multiple-choice questions in real-time.
-
-Solution: Carefully crafted prompts and JSON templates for Gemini AI, combined with frontend logic to format and display questions dynamically.
-
-
-## Summary
-
-QuizNest provides a fast, fun, and interactive way to practice and test knowledge on any topic. Leveraging AI, it supports self-directed learning, personalized practice, and skill enhancement — empowering students and learners to improve their understanding and retain knowledge effectively.
