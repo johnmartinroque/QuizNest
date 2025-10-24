@@ -18,6 +18,13 @@ This project aligns with SDG 4: Quality Education, specifically Target 4.4, by e
 - 🧮 Instant Feedback – Get results immediately after submitting a quiz.
 - 🔐 Firebase Authentication – Secure login and registration system.
 
+## 🎮 How to Play
+
+1. Enter a topic prompt — QuizNest will generate a quiz based on your chosen topic.
+2. Answer the questions and submit to instantly see your score.
+3. Browse quizzes created from other users’ prompts and try them out.
+4. Track your progress in your profile, including quiz history, streaks, and performance stats.
+
 ## Tech Stack
 
 - **Frontend:** React, React Router
