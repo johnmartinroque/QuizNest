@@ -60,7 +60,8 @@ function Profile() {
       <div className="mb-6">
         <StreakCounter />
         <StreakCalendar history={history} />
-        <UserStatistics history={history} />
+        {/*
+        <UserStatistics history={history} /> */}
       </div>
       <div className="max-w-2xl mx-auto mt-10 bg-white p-6 rounded-xl shadow-md">
         <h2 className="text-xl font-semibold mb-3">🧠 Quiz History</h2>
