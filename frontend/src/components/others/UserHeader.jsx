@@ -20,19 +20,13 @@ function UserHeader() {
     <header className="bg-white dark:bg-gray-900 shadow-sm">
       <div className="mx-auto flex h-16 max-w-screen-xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link className="block text-teal-600 dark:text-teal-300" to="/">
+        <Link className="block" to="/">
           <span className="sr-only">Home</span>
-          <svg
-            className="h-8"
-            viewBox="0 0 28 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0.41 10.3847C1.14777 7.4194 2.85643 4.7861 5.2639 2.90424C7.6714 1.02234 10.6393 0 13.695 0C16.7507 0 19.7186 1.02234 22.1261 2.90424C24.5336 4.7861 26.2422 7.4194 26.98 10.3847H25.78C23.7557 10.3549 21.7729 10.9599 20.11 12.1147C17.6924 10.9866 15.7166 10.3841 13.695 10.3841C11.6734 10.3841 9.6976 10.9866 8.02 12.1147C5.6171 10.9599 3.6343 10.3549 1.61 10.3847H0.41Z"
-              fill="currentColor"
-            />
-          </svg>
+          <img
+            src="/images/quiznestlogo.png"
+            alt="QuizNest Logo"
+            className="h-12 w-auto sm:h-14 lg:h-16"
+          />
         </Link>
 
         {/* Desktop Navigation */}
