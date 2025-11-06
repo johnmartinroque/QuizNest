@@ -19,8 +19,35 @@ function QuizMaker() {
       return;
     }
 
-    setLoading(true);
+    // Basic validation for irrelevant or unsafe inputs
+    const invalidPatterns = [
+      /say/i,
+      /hello/i,
+      /ignore/i,
+      /disregard/i,
+      /prompt/i,
+      /delete/i,
+      /remove/i,
+      /run/i,
+      /command/i,
+      /hi/i,
+      /bye/i,
+    ];
 
+    if (invalidPatterns.some((pattern) => pattern.test(topic))) {
+      alert(
+        "⚠️ Please enter a valid quiz topic (e.g., Math, Space, JavaScript)."
+      );
+      return;
+    }
+
+    // Optional: ensure topic is mostly letters (avoid nonsense like "1234@@")
+    if (!/^[a-zA-Z0-9\s]{3,}$/.test(topic)) {
+      alert("⚠️ Please enter a meaningful topic.");
+      return;
+    }
+
+    setLoading(true);
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
