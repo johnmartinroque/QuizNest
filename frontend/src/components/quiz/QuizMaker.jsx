@@ -19,36 +19,38 @@ function QuizMaker() {
       return;
     }
 
-    // Basic validation for irrelevant or unsafe inputs
-    const invalidPatterns = [
-      /say/i,
-      /hello/i,
-      /ignore/i,
-      /disregard/i,
-      /prompt/i,
-      /delete/i,
-      /remove/i,
-      /run/i,
-      /command/i,
-      /hi/i,
-      /bye/i,
-    ];
-
-    if (invalidPatterns.some((pattern) => pattern.test(topic))) {
-      alert(
-        "⚠️ Please enter a valid quiz topic (e.g., Math, Space, JavaScript)."
-      );
-      return;
-    }
-
-    // Optional: ensure topic is mostly letters (avoid nonsense like "1234@@")
-    if (!/^[a-zA-Z0-9\s]{3,}$/.test(topic)) {
-      alert("⚠️ Please enter a meaningful topic.");
-      return;
-    }
-
     setLoading(true);
+
     try {
+      // 1️⃣ Step 1: Validate the topic with Gemini
+      const validationModel = genAI.getGenerativeModel({
+        model: "gemini-2.5-flash",
+      });
+
+      const validationPrompt = `
+Check if "${topic}" is a valid quiz topic.
+Respond ONLY with "valid" or "invalid".
+A valid topic should be educational, factual, or concept-based (like "Physics", "Space", "JavaScript").
+Invalid examples: "say hello", "disregard prompt", "ignore this", "make a sandwich", "run a command".
+`;
+
+      const validationResult = await validationModel.generateContent(
+        validationPrompt
+      );
+      const validationText = validationResult.response
+        .text()
+        .toLowerCase()
+        .trim();
+
+      if (validationText.includes("invalid")) {
+        alert(
+          "⚠️ Please enter a valid quiz topic (e.g., Math, Space, History)."
+        );
+        setLoading(false);
+        return;
+      }
+
+      // 2️⃣ Step 2: Proceed to generate the quiz
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
       const prompt = `
@@ -74,6 +76,7 @@ Return only a JSON object in this exact format:
         .trim();
       const parsed = JSON.parse(text);
 
+      // 3️⃣ Step 3: Save the generated quiz to Firestore
       const docRef = await addDoc(collection(db, "quizzes"), {
         topic,
         difficulty,
@@ -82,6 +85,7 @@ Return only a JSON object in this exact format:
         createdAt: new Date(),
       });
 
+      // 4️⃣ Step 4: Navigate to the quiz page
       navigate(`/quiz/${docRef.id}`);
     } catch (err) {
       console.error("Error generating quiz:", err);
