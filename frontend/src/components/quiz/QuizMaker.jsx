@@ -10,16 +10,18 @@ const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 function QuizMaker() {
   const [topic, setTopic] = useState("");
   const [difficulty, setDifficulty] = useState("medium");
+  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const generateQuiz = async () => {
     if (!topic.trim()) {
-      alert("Please enter a topic.");
+      setError("Please enter a topic.");
       return;
     }
 
     setLoading(true);
+    setError(""); // Clear previous error
 
     try {
       // 1️⃣ Step 1: Validate the topic with Gemini
@@ -43,7 +45,7 @@ Invalid examples: "say hello", "disregard prompt", "ignore this", "make a sandwi
         .trim();
 
       if (validationText.includes("invalid")) {
-        alert(
+        setError(
           "⚠️ Please enter a valid quiz topic (e.g., Math, Space, History)."
         );
         setLoading(false);
@@ -74,9 +76,10 @@ Return only a JSON object in this exact format:
         .text()
         .replace(/```json|```/g, "")
         .trim();
+
       const parsed = JSON.parse(text);
 
-      // 3️⃣ Step 3: Save the generated quiz to Firestore
+      // 3️⃣ Step 3: Save to Firestore
       const docRef = await addDoc(collection(db, "quizzes"), {
         topic,
         difficulty,
@@ -85,11 +88,10 @@ Return only a JSON object in this exact format:
         createdAt: new Date(),
       });
 
-      // 4️⃣ Step 4: Navigate to the quiz page
       navigate(`/quiz/${docRef.id}`);
     } catch (err) {
       console.error("Error generating quiz:", err);
-      alert("⚠️ Failed to generate quiz. Please try again.");
+      setError("⚠️ Failed to generate quiz. Please try again.");
     }
 
     setLoading(false);
@@ -106,6 +108,7 @@ Return only a JSON object in this exact format:
           setDifficulty={setDifficulty}
           loading={loading}
           generateQuiz={generateQuiz}
+          error={error}
         />
       </div>
     </div>
