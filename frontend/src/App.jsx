@@ -16,6 +16,7 @@ import { auth } from "./firebase";
 import UserHeader from "./components/others/UserHeader";
 import Profile from "./screens/Profile";
 import ProtectedRoute from "./components/others/ProtectedRoute";
+import ViewProfile from "./screens/ViewProfile";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -47,7 +48,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-
+          <Route path="/Profile/:id" element={<ViewProfile />} />
           <Route path="/quiz/:id" element={<AnswerQuiz />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
