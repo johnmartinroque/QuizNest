@@ -48,6 +48,15 @@ function App() {
             }
           />
 
+          <Route
+            path="/Profile/:id"
+            element={
+              <ProtectedRoute user={user}>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="/quiz/:id" element={<AnswerQuiz />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
