@@ -61,7 +61,7 @@ function ViewProfile() {
       <h1 className="text-2xl font-bold mb-4 text-center">
         👤 {userData.email}'s Profile
       </h1>
-      <FollowButton targetUserId={userIdFromRoute} />
+      <FollowButton targetUserId={id} />
 
       <div className="mb-6">
         {/* 🔥 Optional: You can reuse StreakCounter by modifying it to accept a userId prop */}

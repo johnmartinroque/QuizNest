@@ -7,6 +7,7 @@ import StreakCalendar from "../components/profile/StreakCalendar";
 
 import Spinner from "../components/others/Spinner";
 import UserStatistics from "../components/profile/UserStatistics";
+import FollowedUsers from "../components/profile/FollowedUsers";
 function Profile() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -56,6 +57,7 @@ function Profile() {
     <div>
       <h1 className="text-2xl font-bold mb-4 text-center">👤 Profile</h1>
       <p className="text-center text-gray-600 mb-6">{userEmail}</p>
+      <FollowedUsers />
 
       <div className="mb-6">
         <StreakCounter />
