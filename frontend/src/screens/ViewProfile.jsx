@@ -6,6 +6,7 @@ import HistoryCard from "../components/profile/HistoryCard";
 import StreakCalendar from "../components/profile/StreakCalendar";
 import Spinner from "../components/others/Spinner";
 import StreakCounter from "../components/profile/StreakCounter";
+import FollowButton from "../components/profile/FollowButton";
 
 function ViewProfile() {
   const { id } = useParams(); // 👈 get user id from URL (/profile/:id)
@@ -60,6 +61,7 @@ function ViewProfile() {
       <h1 className="text-2xl font-bold mb-4 text-center">
         👤 {userData.email}'s Profile
       </h1>
+      <FollowButton targetUserId={userIdFromRoute} />
 
       <div className="mb-6">
         {/* 🔥 Optional: You can reuse StreakCounter by modifying it to accept a userId prop */}
