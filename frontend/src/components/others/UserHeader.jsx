@@ -1,16 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth, db } from "../../firebase"; // adjust path if needed
+import { signOut, onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../../firebase";
 import { collection, getDocs, query, where, limit } from "firebase/firestore";
 
 function UserHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searching, setSearching] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
   const navigate = useNavigate();
+
+  // ✅ Get logged-in user email
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) setUserEmail(user.email);
+      else setUserEmail("");
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleSearch = async (e) => {
     const term = e.target.value.trim();
@@ -88,6 +99,7 @@ function UserHeader() {
           </ul>
         </nav>
 
+        {/* Search bar */}
         <div className="relative hidden sm:block w-64">
           <input
             type="text"
@@ -132,18 +144,47 @@ function UserHeader() {
           )}
         </div>
 
-        {/* Right Side Buttons (Logout same style as Login/Register) */}
-        <div className="flex items-center gap-4">
-          <div className="hidden sm:flex sm:gap-4">
-            <button
-              onClick={handleLogout}
-              className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 dark:hover:bg-teal-500"
-            >
-              Logout
-            </button>
-          </div>
+        {/* Right side: user dropdown */}
+        <div className="relative flex items-center gap-4">
+          {userEmail && (
+            <div className="relative">
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="flex items-center gap-2 rounded-md bg-gray-100 px-4 py-2 text-sm text-gray-700 dark:bg-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
+              >
+                <span>{userEmail}</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className={`h-4 w-4 transition-transform ${
+                    dropdownOpen ? "rotate-180" : ""
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
 
-          {/* Hamburger Button */}
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-md z-50">
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Hamburger Button for mobile */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="block rounded-sm bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-700 md:hidden dark:bg-gray-800 dark:text-white dark:hover:text-gray-300"
