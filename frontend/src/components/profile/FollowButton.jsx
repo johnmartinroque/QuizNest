@@ -39,17 +39,29 @@ function FollowButton({ targetUserId }) {
 
   const handleFollowToggle = async () => {
     if (!currentUserId || currentUserId === targetUserId) return;
-    const userRef = doc(db, "users", currentUserId);
+
+    const currentUserRef = doc(db, "users", currentUserId);
+    const targetUserRef = doc(db, "users", targetUserId);
+
     try {
       if (isFollowing) {
-        await updateDoc(userRef, {
+        // 🔹 Unfollow: remove both relations
+        await updateDoc(currentUserRef, {
           followedUsers: arrayRemove(targetUserId),
         });
+        await updateDoc(targetUserRef, {
+          followers: arrayRemove(currentUserId),
+        });
       } else {
-        await updateDoc(userRef, {
+        // 🔹 Follow: add both relations
+        await updateDoc(currentUserRef, {
           followedUsers: arrayUnion(targetUserId),
         });
+        await updateDoc(targetUserRef, {
+          followers: arrayUnion(currentUserId),
+        });
       }
+
       setIsFollowing(!isFollowing);
     } catch (error) {
       console.error("Error updating follow status:", error);
