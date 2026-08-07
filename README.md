@@ -1,13 +1,6 @@
 # 🧠 QuizNest [Website Link](https://emerg-tech.vercel.app)
 
 
-An error tracking and monitoring platform designed for active n8n workflows — helping teams manage, monitor, and resolve workflow execution issues efficiently using React and Supabase.
-
-Overview
-
-TraceNode is a web-based workflow error management system that helps users track failed executions from active n8n workflows in real time. The platform allows teams to monitor unresolved issues, update error statuses, review activity logs, and maintain organized workflow operations through a centralized dashboard.
-
-This project supports efficient workflow automation management by improving visibility, accountability, and issue resolution for automated systems and integrations
 
 ## 🎮 How to Play
 
