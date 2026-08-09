@@ -1,5 +1,6 @@
 # 🧠 QuizNest [Website Link](https://emerg-tech.vercel.app)
 
+An AI-powered quiz platform where users enter a topic prompt and QuizNest generates a custom quiz using Google's Gemini AI. Users can answer questions for instant scoring, browse and try quizzes created from other users' prompts, and track their progress through quiz history, streaks, and performance stats on their profile.
 
 
 ## 🎮 How to Play
