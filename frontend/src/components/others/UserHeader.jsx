@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut, onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "../../firebase";
-import { collection, getDocs, query, where, limit } from "firebase/firestore";
+import { auth } from "../../firebase";
 
 function UserHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [searching, setSearching] = useState(false);
   const [userEmail, setUserEmail] = useState("");
 
   const navigate = useNavigate();
@@ -22,44 +18,6 @@ function UserHeader() {
     });
     return () => unsubscribe();
   }, []);
-
-  const handleSearch = async (e) => {
-    const term = e.target.value.trim();
-    setSearchTerm(term);
-
-    if (term.length < 2) {
-      setSearchResults([]);
-      return;
-    }
-
-    setSearching(true);
-    try {
-      const usersRef = collection(db, "users");
-      const q = query(
-        usersRef,
-        where("email", ">=", term),
-        where("email", "<=", term + "\uf8ff"),
-        limit(5)
-      );
-
-      const querySnapshot = await getDocs(q);
-      const results = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setSearchResults(results);
-    } catch (error) {
-      console.error("Search error:", error);
-    } finally {
-      setSearching(false);
-    }
-  };
-
-  const handleSelectUser = (id) => {
-    setSearchResults([]);
-    setSearchTerm("");
-    navigate(`/profile/${id}`);
-  };
 
   const handleLogout = async () => {
     try {
@@ -98,51 +56,6 @@ function UserHeader() {
             ))}
           </ul>
         </nav>
-
-        {/* Search bar */}
-        <div className="relative hidden sm:block w-64">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleSearch}
-            placeholder="Search users by email..."
-            className="w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 text-sm focus:border-teal-500 focus:ring-1 focus:ring-teal-500 dark:bg-gray-800 dark:text-white"
-          />
-          {searching && (
-            <div className="absolute right-3 top-2 text-gray-400 animate-spin">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 4v4m0 8v4m8-8h4M4 12H0"
-                />
-              </svg>
-            </div>
-          )}
-
-          {searchResults.length > 0 && (
-            <ul className="absolute mt-1 w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg max-h-56 overflow-y-auto z-50">
-              {searchResults.map((user) => (
-                <li
-                  key={user.id}
-                  onClick={() => handleSelectUser(user.id)}
-                  className="px-3 py-2 hover:bg-teal-50 dark:hover:bg-gray-700 cursor-pointer text-sm"
-                >
-                  <span className="font-medium text-gray-800 dark:text-white">
-                    {user.email}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
 
         {/* Right side: user dropdown */}
         <div className="relative flex items-center gap-4">
